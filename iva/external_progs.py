@@ -36,7 +36,7 @@ prog_to_version_cmd = {
     'kraken-build': ('kraken-build --version', re.compile('^Kraken version (.*)$')),
     'nucmer': ('nucmer --version', re.compile('^NUCmer \(NUCleotide MUMmer\) version (.*)$')),
     'R': ('R --version', re.compile('^R version (.*) \(.*\) --')),
-    'bowtie2': ('bowtie2 --version', re.compile('version (.*)$')),
+    'smalt': ('smalt version', re.compile('^Version: (.*)$')),
     'samtools': ('samtools', re.compile('(\d+\.\d+[\.\d]*)')),
 }
 
@@ -50,7 +50,7 @@ assembly_progs = [
     'kmc',
     'kmc_dump',
     'nucmer',
-    'bowtie2',
+    'smalt',
     'samtools',
 ]
 
@@ -58,7 +58,7 @@ assembly_progs = [
 qc_progs = [
     'nucmer',
     'R',
-    'bowtie2',
+    'smalt',
     'samtools',
 ]
 
