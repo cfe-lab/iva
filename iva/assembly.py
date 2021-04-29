@@ -505,7 +505,7 @@ class Assembly:
         hits = self._run_nucmer(contigs)
         assembly_graph = graph.Graph(self, contigs=contigs)
         for hit in hits:
-            e = hit.to_graph_edge()
+            e = hit.to_graph_edge(min_overlap_length=80, min_identity=95)
             if e is not None:
                 assembly_graph.add_edge(e)
 

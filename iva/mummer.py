@@ -25,7 +25,7 @@ HIT_AT_END = 1
 HIT_AT_BOTH_ENDS = 2
 HIT_NO_ENDS = 3
 
-def run_nucmer(query, ref, outfile, min_id=95, min_length=100, breaklen=200):
+def run_nucmer(query, ref, outfile, min_id=95, min_length=80, breaklen=200):
     query = os.path.abspath(query)
     ref = os.path.abspath(ref)
     outfile = os.path.abspath(outfile)
