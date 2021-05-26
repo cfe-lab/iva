@@ -55,6 +55,7 @@ docs/_build/
 
 # venv
 venv_iva/*
+.venv/*
 
 .idea/*
 

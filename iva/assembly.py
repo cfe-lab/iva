@@ -341,6 +341,14 @@ class Assembly:
         tmp_prefix = os.path.join(tmpdir, 'reads')
         total_bases_added = 0
 
+        if self.pessimistic:
+            if no_map_contigs is None:
+                no_map_contigs = []
+            newest_contig_id = list(self.contigs.keys())[-1]
+            for contig_id in self.contigs.keys():
+                if contig_id != newest_contig_id:
+                    no_map_contigs.append(contig_id)
+
         for i in range(5):
             bam_prefix = out_prefix + '.' + str(i+1) + '.map'
             bam = bam_prefix +  '.bam'
