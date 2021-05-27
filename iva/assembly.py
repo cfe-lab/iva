@@ -200,11 +200,20 @@ class Assembly:
             pyfastaq.utils.close(fa_out2)
         total_bases_added = 0
 
-        for ctg in self.contigs:
-            left_length, right_length = self.contigs[ctg].extend(self.ext_min_cov, self.ext_min_ratio, self.ext_bases)
+        if not self.pessimistic:
+            for ctg in self.contigs:
+                left_length, right_length = self.contigs[ctg].extend(self.ext_min_cov, self.ext_min_ratio, self.ext_bases)
+                if self.verbose:
+                    print('    extend contig ' +  ctg, 'new_length:' + str(len(self.contigs[ctg])), 'added_left:' + str(left_length), 'added_right:' + str(right_length), sep='\t')
+                self.contig_lengths[ctg].append([len(self.contigs[ctg]), left_length, right_length])
+                total_bases_added += left_length + right_length
+        else:
+            newest_contig_id = list(self.contigs.keys())[-1]
+            left_length, right_length = self.contigs[newest_contig_id].extend(self.ext_min_cov, self.ext_min_ratio, self.ext_bases)
             if self.verbose:
-                print('    extend contig ' +  ctg, 'new_length:' + str(len(self.contigs[ctg])), 'added_left:' + str(left_length), 'added_right:' + str(right_length), sep='\t')
-            self.contig_lengths[ctg].append([len(self.contigs[ctg]), left_length, right_length])
+                print('    extend contig ' + newest_contig_id, 'new_length:' + str(len(self.contigs[newest_contig_id])),
+                      'added_left:' + str(left_length), 'added_right:' + str(right_length), sep='\t')
+            self.contig_lengths[newest_contig_id].append([len(self.contigs[newest_contig_id]), left_length, right_length])
             total_bases_added += left_length + right_length
 
         return total_bases_added
