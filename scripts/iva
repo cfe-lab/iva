@@ -180,22 +180,24 @@ else:
         fq_to_convert_to_fa_1 = reads_for_trimming_1
         fq_to_convert_to_fa_2 = reads_for_trimming_2
 
-    p1 = multiprocessing.Process(target=pyfastaq.tasks.to_fasta, args=(fq_to_convert_to_fa_1, reads_1), kwargs={'line_length':0})
-    p2 = multiprocessing.Process(target=pyfastaq.tasks.to_fasta, args=(fq_to_convert_to_fa_2, reads_2), kwargs={'line_length':0})
-    p1.start()
+    # p1 = multiprocessing.Process(target=pyfastaq.tasks.to_fasta, args=(fq_to_convert_to_fa_1, reads_1), kwargs={'line_length':0})
+    # p2 = multiprocessing.Process(target=pyfastaq.tasks.to_fasta, args=(fq_to_convert_to_fa_2, reads_2), kwargs={'line_length':0})
+    # p1.start()
+    pyfastaq.tasks.to_fasta(fq_to_convert_to_fa_1, reads_1, line_length=0)
+    pyfastaq.tasks.to_fasta(fq_to_convert_to_fa_2, reads_2, line_length=0)
 
-    if options.threads == 1:
-        p1.join()
-
-    p2.start()
-    p2.join()
-
-    if options.threads > 1:
-        p1.join()
-
-    if p1.exitcode != 0 or p2.exitcode != 0:
-        print('Error in input reads files. Cannot continue', file=sys.stderr)
-        sys.exit(1)
+    # if options.threads == 1:
+    #     p1.join()
+    #
+    # p2.start()
+    # p2.join()
+    #
+    # if options.threads > 1:
+    #     p1.join()
+    #
+    # if p1.exitcode != 0 or p2.exitcode != 0:
+    #     print('Error in input reads files. Cannot continue', file=sys.stderr)
+    #     sys.exit(1)
 
     for fname in to_delete:
         os.unlink(fname)

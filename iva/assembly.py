@@ -355,7 +355,7 @@ class Assembly:
                 no_map_contigs = set()
             newest_contig_id = list(self.contigs.keys())[-1]
             for contig_id in self.contigs.keys():
-                if contig_id != newest_contig_id:
+                if contig_id != newest_contig_id and contig_id in self.contigs_trimmed_for_strand_bias:
                     no_map_contigs.add(contig_id)
 
         for i in range(5):
@@ -558,6 +558,8 @@ class Assembly:
                 for name, x, y in coords:
                     self._remove_contig(name)
                 self._add_contig(new_contig)
+                if self.pessimistic:
+                    self.contigs_trimmed_for_strand_bias.add(new_contig.id)
 
 
     def _contig_names_size_order(self, biggest_first=False):
