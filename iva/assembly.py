@@ -460,8 +460,8 @@ class Assembly:
 
             if not self.make_new_seeds or new_seed_name is None or not self.make_new_seeds or len(self.contigs) >= self.max_contigs or not reads_left:
                 if reads_prefix != current_reads_prefix:
-                    os.unlink(current_reads_prefix + '_1.fa')
-                    os.unlink(current_reads_prefix + '_2.fa')
+                    os.rename(current_reads_prefix + '_1.fa', 'ivafiltered_1.fa')
+                    os.rename(current_reads_prefix + '_2.fa', 'ivafiltered_2.fa')
                 break
 
             if self.verbose:
@@ -476,8 +476,8 @@ class Assembly:
                     print('Read coverage may be too low, in which case try reducing --seed_min_kmer_cov, --ext_min_cov and --seed_ext_min_cov.')
                     print('Alternatively --max_insert could be incorrect, which is currently set to:', self.max_insert)
                 if reads_prefix != current_reads_prefix:
-                    os.unlink(current_reads_prefix + '_1.fa')
-                    os.unlink(current_reads_prefix + '_2.fa')
+                    os.rename(current_reads_prefix + '_1.fa', 'ivafiltered_1.fa')
+                    os.rename(current_reads_prefix + '_2.fa', 'ivafiltered_2.fa')
                 break
 
 
