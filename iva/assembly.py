@@ -447,14 +447,15 @@ class Assembly:
             if self.verbose:
                 print('{:_^79}'.format(' START ITERATION ' + str(i) + ' '), flush=True)
             self._read_pair_extension_iterations(current_reads_prefix, out_prefix + '.' + str(i))
-            filtered_reads_prefix = out_prefix + '.' + str(i) + '.filtered'
-            self._trim_strand_biased_ends(reads_prefix, tag_as_trimmed=True, out_prefix=filtered_reads_prefix)
-            self._remove_contained_contigs(list(self.contigs.keys()))
-            self._merge_overlapping_contigs(list(self.contigs.keys()))
-            if reads_prefix != current_reads_prefix:
-                os.unlink(current_reads_prefix + '_1.fa')
-                os.unlink(current_reads_prefix + '_2.fa')
-            current_reads_prefix = filtered_reads_prefix
+            if len(self.contigs) > 0:
+                filtered_reads_prefix = out_prefix + '.' + str(i) + '.filtered'
+                self._trim_strand_biased_ends(reads_prefix, tag_as_trimmed=True, out_prefix=filtered_reads_prefix)
+                self._remove_contained_contigs(list(self.contigs.keys()))
+                self._merge_overlapping_contigs(list(self.contigs.keys()))
+                if reads_prefix != current_reads_prefix:
+                    os.unlink(current_reads_prefix + '_1.fa')
+                    os.unlink(current_reads_prefix + '_2.fa')
+                current_reads_prefix = filtered_reads_prefix
             i += 1
             reads_left = os.path.getsize(current_reads_prefix + '_1.fa') > 0 and os.path.getsize(current_reads_prefix + '_2.fa') > 0
 
